@@ -1,25 +1,45 @@
 import "./sidebar.css";
 import { assets } from "../../assets/assets";
+import { useState } from "react";
 
 const Sidebar = () => {
+  const [extended, setExtended] = useState(false);
   return (
     <div className="sidebar">
       <div className="top">
-        <img className="menu" src={assets.menu_icon} alt="menu-icon" />
+        <img
+          onClick={() => setExtended((prev) => !prev)}
+          className="menu"
+          src={assets.menu_icon}
+          alt="menu-icon"
+        />
         <div className="new-chat">
           <img src={assets.plus_icon} alt="plus-icon" />
-          <p>New Chat</p>
+          {extended ? <p>New Chat</p> : null}
         </div>
-        <div className="recent">
-          <p className="recent-title">recent</p>
-          <div className="recent-entry">
-            <img src={assets.message_icon} alt="msg-icon" />
-            <p>What is React ?...</p>
+        {extended ? (
+          <div className="recent">
+            <p className="recent-title">Recent</p>
+            <div className="recent-entry">
+              <img src={assets.message_icon} alt="msg-icon" />
+              <p>What is React ?...</p>
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
       <div className="bottom">
-        <div className="bottom-item"></div>
+        <div className="bottom-item recent-entry">
+          <img src={assets.question_icon} alt="question-icon" />
+          {extended ? <p>Help</p> : null}
+        </div>
+        <div className="bottom-item recent-entry">
+          <img src={assets.history_icon} alt="history-icon" />
+          {extended ? <p>Activity</p> : null}
+        </div>
+        <div className="bottom-item recent-entry">
+          <img src={assets.setting_icon} alt="settings-icon" />
+          {extended ? <p>Settings</p> : null}
+        </div>
       </div>
     </div>
   );
