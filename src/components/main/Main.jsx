@@ -21,36 +21,52 @@ const Main = () => {
         <img src={assets.user_icon} alt="user-icon" />
       </div>
       <div className="main-container">
-        <div className="greet">
-          <p>
-            <span>Hello, Dev</span>
-          </p>
-          <p>How can I help you today?</p>
-        </div>
-        <div className="cards">
-          <div className="card">
-            <p>Teach me the concept of game theory in simple terms.</p>
-            <img src={assets.compass_icon} />
+        {!showResult ? (
+          <>
+            <div className="greet">
+              <p>
+                <span>Hello, Dev</span>
+              </p>
+              <p>How can I help you today?</p>
+            </div>
+            <div className="cards">
+              <div className="card">
+                <p>Teach me the concept of game theory in simple terms.</p>
+                <img src={assets.compass_icon} />
+              </div>
+              <div className="card">
+                <p>Briefly summarize this concept: Urban Planning.</p>
+                <img src={assets.bulb_icon} />
+              </div>
+              <div className="card">
+                <p>
+                  Create an easy to follow outline for a home routine:
+                  organizing my closet.
+                </p>
+                <img src={assets.message_icon} />
+              </div>
+              <div className="card">
+                <p>
+                  Come up with an idea for mocktail using club soda, passion
+                  fruit, and mint.
+                </p>
+                <img src={assets.code_icon} />
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="result">
+            <div className="result-title">
+              <img src={assets.user_icon} alt="user" />
+              <p>{recentPrompt}</p>
+            </div>
+            <div className="result-data">
+              <img src={assets.gemini_icon} alt="gemini" />
+              <p dangerouslySetInnerHTML={{ __html: resultData }}></p>
+            </div>
           </div>
-          <div className="card">
-            <p>Briefly summarize this concept: Urban Planning.</p>
-            <img src={assets.bulb_icon} />
-          </div>
-          <div className="card">
-            <p>
-              Create an easy to follow outline for a home routine: organizing my
-              closet.
-            </p>
-            <img src={assets.message_icon} />
-          </div>
-          <div className="card">
-            <p>
-              Come up with an idea for mocktail using club soda, passion fruit,
-              and mint.
-            </p>
-            <img src={assets.code_icon} />
-          </div>
-        </div>
+        )}
+
         <div className="main-bottom">
           <div className="search-box">
             <input
