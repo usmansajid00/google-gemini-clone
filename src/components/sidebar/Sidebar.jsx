@@ -1,9 +1,27 @@
 import "./sidebar.css";
 import { assets } from "../../assets/assets";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { Context } from "../../contextAPI/Context";
 
 const Sidebar = () => {
   const [extended, setExtended] = useState(false);
+  const { onSent, previousPrompt, setRecentPrompt, newChat } =
+    useContext(Context);
+  const loadPrompt = async (prompt) => {
+    setRecentPrompt(prompt);
+    await onSent(prompt);
+  };
+
+  const truncatePrompt = (prompt) => {
+    const words = prompt.split(" ");
+    const truncatedPrompt = words.slice(0, 5).join(" ");
+    if (words.length > 5) {
+      return truncatedPrompt + " ...";
+    } else {
+      return truncatedPrompt;
+    }
+  };
+
   return (
     <div className="sidebar">
       <div className="top">
@@ -13,17 +31,23 @@ const Sidebar = () => {
           src={assets.menu_icon}
           alt="menu-icon"
         />
-        <div className="new-chat">
+        <div onClick={() => newChat()} className="new-chat">
           <img src={assets.plus_icon} alt="plus-icon" />
           {extended ? <p>New Chat</p> : null}
         </div>
         {extended ? (
           <div className="recent">
             <p className="recent-title">Recent</p>
-            <div className="recent-entry">
-              <img src={assets.message_icon} alt="msg-icon" />
-              <p>What is React ?...</p>
-            </div>
+            {previousPrompt.map((item, index) => (
+              <div
+                onClick={() => loadPrompt(item)}
+                className="recent-entry"
+                key={index}
+              >
+                <img src={assets.message_icon} alt="msg-icon" />
+                <p>{truncatePrompt(item)}</p>
+              </div>
+            ))}
           </div>
         ) : null}
       </div>
